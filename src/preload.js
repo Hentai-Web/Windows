@@ -8,10 +8,13 @@ const Store = require("electron-store");
 const fs = require("fs");
 const http = require("http");
 const path = require("path");
+const defaultSetting = require("./defaultSettings");
 const fenster = require("@electron/remote");
-const Mousetrap = require("mousetrap");
+const DiscordRPC = require("discord-rpc");
+const pkg = require("../package.json");
 
 const store = new Store();
+const dcrpclogo = defaultSetting("electron.rpcLogo", "hentaiweb__");
 
 contextBridge.exposeInMainWorld("Windows", {
   newWindow: (uri, options) => {
@@ -84,7 +87,35 @@ contextBridge.exposeInMainWorld("Windows", {
   },
 
   discordRPC: (arg) => {
-    ipcRenderer.send("dcrpc-state", arg);
+    const clientId = "726837711851356242";
+
+    const rpc = new DiscordRPC.Client({ transport: "ipc" });
+    const startTimestamp = new Date();
+
+    function setActivity() {
+      if (!rpc || !fenster.getCurrentWindow()) {
+        return;
+      }
+
+      rpc.setActivity({
+        details: `Version ${pkg.version}`,
+        state: arg,
+        startTimestamp,
+        largeImageKey: dcrpclogo,
+        instance: false,
+      });
+    }
+
+    rpc.on("ready", () => {
+      setActivity();
+
+      setInterval(() => {
+        setActivity();
+      }, 15e3);
+    });
+
+    rpc.login({ clientId }).catch(console.error);
+    // ipcRenderer.send("dcrpc-state", "_", arg);
   },
 
   discordRPCdisconnect() {

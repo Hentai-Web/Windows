@@ -6,12 +6,9 @@ const isDev = require("electron-is-dev");
 const fs = require("fs");
 const fenster = require("@electron/remote/main");
 const defaultSetting = require("./defaultSettings");
-const pkg = require("../package.json");
-const client = require("discord-rich-presence")("726837711851356242");
 const contextMenu = require("electron-context-menu");
 
 const store = new Store();
-const date = Date.now();
 let tray = null;
 
 contextMenu({
@@ -34,7 +31,6 @@ function createWindow() {
   const frame = defaultSetting("electron.devTools", "false");
   const devTools = defaultSetting("electron.devTools", "false");
   const alwaysOnTop = defaultSetting("electron.alwaysOnTop", "false");
-  const dcrpclogo = defaultSetting("electron.rpcLogo", "hentaiweb__");
 
   defaultSetting("electron.hardDevice", "C");
   defaultSetting("language", "en");
@@ -89,22 +85,6 @@ function createWindow() {
   });
 
   webContents.setUserAgent("HENTAI_WEB_WINDOWS");
-
-  ipcMain.on("dcrpc-state", (arg) => {
-    client.updatePresence({
-      state: arg,
-      details: "Version " + pkg.version,
-      startTimestamp: date,
-      largeImageKey: dcrpclogo,
-      instance: true,
-    });
-  });
-
-  ipcMain.on("dcrpc-state-disconnect", (event, arg) => {
-    if (arg) {
-      client.disconnect();
-    }
-  });
 
   ipcMain.on("installreactdevtools", () => {
     require("electron-react-devtools").install();
