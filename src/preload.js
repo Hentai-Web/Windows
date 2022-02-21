@@ -3,6 +3,7 @@
 // preload.js
 const { BrowserWindow, shell, app } = require("@electron/remote");
 const { ipcRenderer } = require("electron");
+const os = require("os");
 const { contextBridge } = require("electron");
 const Store = require("electron-store");
 const fs = require("fs");
@@ -187,5 +188,12 @@ contextBridge.exposeInMainWorld("Windows", {
 
   installReactDevTools: () => {
     ipcRenderer.send("installreactdevtools");
+  },
+
+  getType: () => {
+    return os.type();
+  },
+  getPlatform: () => {
+    return os.platform();
   },
 });
