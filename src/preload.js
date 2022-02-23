@@ -1,7 +1,7 @@
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
 // preload.js
-const { BrowserWindow, shell, app } = require("@electron/remote");
+const { BrowserWindow, shell, app, dialog } = require("@electron/remote");
 const { ipcRenderer } = require("electron");
 const os = require("os");
 const { contextBridge } = require("electron");
@@ -13,9 +13,12 @@ const defaultSetting = require("./defaultSettings");
 const fenster = require("@electron/remote");
 const DiscordRPC = require("discord-rpc");
 const pkg = require("../package.json");
+const glob = require("glob");
+const { Titlebar, Color } = require("custom-electron-titlebar");
 
 const store = new Store();
 const dcrpclogo = defaultSetting("electron.rpcLogo", "hentaiweb__");
+const appIcon = path.join(app.getAppPath(), "/build/ic_launcher.ico");
 
 contextBridge.exposeInMainWorld("Windows", {
   newWindow: (uri, options) => {
@@ -193,7 +196,22 @@ contextBridge.exposeInMainWorld("Windows", {
   getType: () => {
     return os.type();
   },
+
   getPlatform: () => {
     return os.platform();
+  },
+
+  dialog: (props) => {
+    dialog.showMessageBox({
+      title: "Hentai Web",
+      message: props.title,
+      detail: props.message,
+      buttons: ["Ok"],
+      icon: appIcon,
+    });
+  },
+
+  getDirectories: (path, callback) => {
+    glob(store.get("electron.hardDevice") + ":".toUpperCase() + "/hentai-web/" + path + "/**/*", callback);
   },
 });

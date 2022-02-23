@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain, Tray, Menu, shell, Notification, session } = require("electron");
+const { app, BrowserWindow, ipcMain, Tray, Menu, shell, Notification, dialog } = require("electron");
 const path = require("path");
 const Store = require("electron-store");
 const isDev = require("electron-is-dev");
@@ -7,6 +7,7 @@ const fs = require("fs");
 const fenster = require("@electron/remote/main");
 const defaultSetting = require("./defaultSettings");
 const contextMenu = require("electron-context-menu");
+const { setupTitlebar, attachTitlebarToWindow } = require("custom-electron-titlebar/main");
 
 const store = new Store();
 let tray = null;
@@ -69,11 +70,9 @@ function createWindow() {
   const webContents = mainWindow.webContents;
 
   Store.initRenderer();
-
-  console.log(app.getPath("userData"));
-
   fenster.initialize();
   fenster.enable(webContents);
+  attachTitlebarToWindow(mainWindow);
 
   const mainURL = "https://dergoogler.com/hentai-web/";
   const debugURL = "http://192.168.178.81:5500/";
