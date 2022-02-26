@@ -18,7 +18,7 @@ const { Titlebar, Color } = require("custom-electron-titlebar");
 
 const store = new Store();
 const dcrpclogo = defaultSetting("electron.rpcLogo", "hentaiweb__");
-const appIcon = path.join(app.getAppPath(), "/build/ic_launcher.ico");
+const appIcon = path.join(app.getAppPath(), "/build/ic_launcher.png");
 
 contextBridge.exposeInMainWorld("Windows", {
   newWindow: (uri, options) => {
@@ -213,5 +213,15 @@ contextBridge.exposeInMainWorld("Windows", {
 
   getDirectories: (path, callback) => {
     glob(store.get("electron.hardDevice") + ":".toUpperCase() + "/hentai-web/" + path + "/**/*", callback);
+  },
+
+  setStatusbarColor: (color, options) => {
+    new Titlebar({
+      backgroundColor: Color.fromHex(color),
+      onMaximize: options.onMaximize,
+      onClose: options.onClose,
+      onMinimize: options.onMinimize,
+      menu: null
+    }).updateTitle("Hentai Web");
   },
 });

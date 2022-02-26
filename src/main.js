@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain, Tray, Menu, shell, Notification, dialog } = require("electron");
+const { app, BrowserWindow, ipcMain, Tray, Menu, shell, Notification } = require("electron");
 const path = require("path");
 const Store = require("electron-store");
 const isDev = require("electron-is-dev");
@@ -25,11 +25,12 @@ contextMenu({
 
 const appIcon = path.join(app.getAppPath(), "/build/ic_launcher.ico");
 
+setupTitlebar();
+
 function createWindow() {
   // Create the browser window.
   const width = defaultSetting("electron.windowSize.width", 375);
   const height = defaultSetting("electron.windowSize.height", 812);
-  const frame = defaultSetting("electron.devTools", "false");
   const devTools = defaultSetting("electron.devTools", "false");
   const alwaysOnTop = defaultSetting("electron.alwaysOnTop", "false");
 
@@ -74,7 +75,7 @@ function createWindow() {
   fenster.enable(webContents);
   attachTitlebarToWindow(mainWindow);
 
-  const mainURL = "https://dergoogler.com/hentai-web/";
+  const mainURL = "https://hw.dergoogler.com/";
   const debugURL = "http://192.168.178.81:5500/";
   const checkMode = !isDev ? mainURL : debugURL;
 
