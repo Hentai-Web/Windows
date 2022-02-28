@@ -34,6 +34,12 @@ contextBridge.exposeInMainWorld("Windows", {
     return app.getVersion();
   },
 
+  core: {
+    app: app,
+    BrowserWindow: BrowserWindow,
+    getCurrentWindow: fenster.getCurrentWindow(),
+  },
+
   close: () => {
     fenster.getCurrentWindow().close();
   },
@@ -221,7 +227,7 @@ contextBridge.exposeInMainWorld("Windows", {
       onMaximize: options.onMaximize,
       onClose: options.onClose,
       onMinimize: options.onMinimize,
-      menu: null
+      menu: null,
     }).updateTitle("Hentai Web");
   },
 });
