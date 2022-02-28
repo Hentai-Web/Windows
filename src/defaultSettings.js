@@ -11,5 +11,3 @@ function defaultSetting(key, value) {
 }
 
 module.exports = defaultSetting;
-
-// Das gleiche nochmal in JAVA

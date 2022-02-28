@@ -25,7 +25,7 @@ contextMenu({
 
 const appIcon = path.join(app.getAppPath(), "/build/ic_launcher.ico");
 
-setupTitlebar();
+// setupTitlebar();
 
 function createWindow() {
   // Create the browser window.
@@ -64,6 +64,7 @@ function createWindow() {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
       enableRemoteModule: true,
+      // nodeIntegrationInWorker: true,
       spellcheck: true,
     },
   });
@@ -73,7 +74,7 @@ function createWindow() {
   Store.initRenderer();
   fenster.initialize();
   fenster.enable(webContents);
-  attachTitlebarToWindow(mainWindow);
+  // attachTitlebarToWindow(mainWindow);
 
   const mainURL = "https://hw.dergoogler.com/";
   const debugURL = "http://192.168.178.81:5500/";
