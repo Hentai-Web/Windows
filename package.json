@@ -4,6 +4,7 @@
   "license": "MIT",
   "author": "Der_Googler",
   "main": "src/main.js",
+  "email": "support@dergoogler.com",
   "homepage": "https://github.com/DerGoogler/Hentai-Web#readme",
   "repository": "https://github.com/DerGoogler/Hentai-Web/Windows",
   "build": {
@@ -29,10 +30,9 @@
     },
     "linux": {
       "icon": "./build/ic_launcher.ico",
+      "maintainer": "Der_Googler",
       "target": [
-        "deb",
-        "snap",
-        "rpm"
+        "tar.xz"
       ]
     },
     "nsis": {
@@ -49,14 +49,13 @@
   },
   "scripts": {
     "build-dev": "electron .",
-    "build-prod": "electron-builder",
-    "build-typescript": "tsc",
-    "watch": "tsc -w",
-    "lint": "eslint -c .eslintrc --ext .ts ./src"
+    "build-prod": "electron-builder --win --linux"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
+    "babel-loader": "^8.2.3",
+    "css-minimizer-webpack-plugin": "^3.4.1",
     "electron": "^16.0.5",
     "electron-builder": "^22.14.5",
     "electron-devtools-installer": "^3.2.0",
@@ -64,7 +63,12 @@
     "electron-react-devtools": "^0.5.3",
     "electron-webpack": "^2.8.2",
     "eslint": "^7.32.0",
-    "typescript": "^4.5.5"
+    "mini-css-extract-plugin": "^2.5.3",
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0",
+    "typescript": "^4.5.5",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.9.2"
   },
   "dependencies": {
     "@electron/get": "^1.13.1",
@@ -83,6 +87,8 @@
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.1",
     "electron-window-shortcut": "^1.0.3",
-    "mousetrap": "^1.6.5"
+    "mousetrap": "^1.6.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

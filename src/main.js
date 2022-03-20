@@ -61,7 +61,7 @@ function createWindow() {
       nativeWindowOpen: true,
       devTools: devTools === "true" ? true : false,
       nodeIntegration: true,
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "/preload.js"),
       contextIsolation: true,
       enableRemoteModule: true,
       // nodeIntegrationInWorker: true,
